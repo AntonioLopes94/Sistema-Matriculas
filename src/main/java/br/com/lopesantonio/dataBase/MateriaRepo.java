@@ -7,5 +7,11 @@ import java.util.Optional;
 
 @Repository
 public interface MateriaRepo extends JpaRepository<Materia, Long> {
+
+
+
     Optional<Materia> findByMaterias(EMaterias materias);
+
+
+   boolean findByName(EMaterias enumMateria);
 }

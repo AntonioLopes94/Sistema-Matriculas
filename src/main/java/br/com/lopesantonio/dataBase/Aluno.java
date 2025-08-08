@@ -7,19 +7,20 @@ import java.util.List;
 
 
 @Entity
+@Table(name = "Aluno")
 public class Aluno {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long matricula;
     private String nome;
 
-    @ManyToMany
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(
             name = "aluno_materia",
-            joinColumns = @JoinColumn(name = "aluno_id"),
+            joinColumns = @JoinColumn(name = "aluno_matricula"),
             inverseJoinColumns = @JoinColumn(name = "materia_id")
     )
-    private List<Materia> materias = new ArrayList<>();
+    private List<Materia> alunoMateria = new ArrayList<>();
 
     //Setter e Getters
 
@@ -36,17 +37,17 @@ public class Aluno {
         this.nome = nome;
     }
     public List<Materia> getMaterias() {
-        return materias;
+        return alunoMateria;
     }
     public void setMaterias(List<Materia> materias) {
-        this.materias = materias;
+        this.alunoMateria = materias;
     }
     public void adicionarMateria (Materia materia){
-    this.materias.add(materia);
+    this.alunoMateria.add(materia);
     materia.getAlunos().add(this);
     }
     public void removerMateria (Materia materia){
-        this.materias.remove(materia);
+        this.alunoMateria.remove(materia);
         materia.getAlunos().remove(this);
     }
 

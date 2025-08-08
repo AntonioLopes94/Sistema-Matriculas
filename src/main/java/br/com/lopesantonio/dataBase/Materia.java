@@ -18,7 +18,7 @@ public class Materia {
     @Enumerated(EnumType.STRING)
     private EMaterias materias;
 
-    @ManyToMany(mappedBy = "materias",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "alunoMateria",fetch = FetchType.EAGER)
     List<Aluno> alunos = new ArrayList<>();
 
     public Long getId() {
