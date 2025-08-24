@@ -55,23 +55,32 @@ public class Main {
         System.out.println("----------//----------"
                 + "\n 1. Adicionar aluno"
                 + "\n 2. Verificar lista de alunos"
-                + "\n 3. Remover o aluno"
-                + "\n 4. Voltar ao inicio"
+                + "\n 3. Verificar inscrições de um aluno"
+                + "\n 4. Remover o aluno"
+                + "\n 5. Voltar ao inicio"
                 + "\n ----------//----------");
         opcaoAluno = input.nextInt();
         input.nextLine();
         switch (opcaoAluno) {
             case 1:
                 System.out.println("Insira o nome do Aluno");
-                var nome = input.nextLine();
-                Aluno aluno = new Aluno(nome);
+                var nomeAluno = input.nextLine();
+                Aluno aluno = new Aluno(nomeAluno);
                 alunoRepo.save(aluno);
                 break;
             case 2:
                 alunos.forEach(System.out::println);
-
                 break;
             case 3:
+                System.out.println("Insira o nome do Aluno");
+                var nomeAluno = input.nextLine();
+                if (!alunoRepo.existsByNome(nomeAluno)){
+                System.out.println("Aluno nao existe nos registros. Por favor, verifique o nome e tente novamente");
+                break; }
+                
+
+
+            case 4:
                 System.out.println("Insira o nome do aluno a ser removido");
                 var alunoNome = input.nextLine();
                 if(alunoRepo.existsByNome(alunoNome)){
@@ -80,7 +89,7 @@ public class Main {
                     System.out.println("Nome do aluno não encontrado");
                 }
                 break;
-            case 4:
+            case 5:
                 break;
             default:
                 System.out.println("Digite uma opção válida");
@@ -92,7 +101,7 @@ public class Main {
         int opcaoMateria;
         System.out.println("----------//----------"
                 + "\n 1. Inscrever aluno em uma matéria"
-                + "\n 2. Verificar inscrições de um aluno"
+                + "\n 2. Verificar turmas"
                 + "\n 3. Verificar matérias disponíveis"
                 + "\n 4. Remover matéria da grade de um aluno"
                 + "\n 5. Voltar ao inicio"
@@ -121,67 +130,32 @@ public class Main {
                         break;
                     }
 
-//                    try{ Emateria emateria = Emateria.anabar3NOJO
-//                    (nomeMateria); }catch (Exception e) { sout("NOme materia inválido: " + nomeMateria); } Materia materia = materiaRepo.findByName(nomeMateria); if(materia == null) { materia = new Materia(nomeMateria); }
+//                    try{
+//                        EMaterias emateria = EMaterias.valueOf(nomeMateria);
+//                    }catch (Exception e) {
+//                        System.out.println("Nome materia inválido: " + nomeMateria);
+//                    }
+//                    Materia materia = materiaRepo.findByName(nomeMateria);
+//                    if(materia == null) {
+//                        materia = new Materia(nomeMateria);
+//                    }
 
 
                     EMaterias enumMateria = EMaterias.valueOf(nomeMateria);
-                    materiaRepo.findByName(enumMateria);
-                    Materia materia = new Materia(nomeMateria);
-                    aluno.adicionarMateria(materia);
-                    System.out.println(materia.getAlunos() + " " + aluno.getMaterias());
+                    materiaRepo.existsByMaterias(enumMateria);
+                    Materia materias = new Materia(nomeMateria);
+                    aluno.adicionarMateria(materias);
+                    System.out.println(materias.getAlunos() + " " + aluno.getMaterias());
                     alunoRepo.save(aluno);
                     break;
-//                    }
-//                    System.out.println("Por favor, insira uma matéria válida");
-
-
-
-//
-
-//                    List<EMaterias> Ematerias = List.of(EMaterias.values());
-//                    Ematerias.stream().sorted(Comparator.comparing(Enum::name)).forEach(m -> System.out.println("- " + m));
-//
-//
-////                    Materia.EMaterias materiaEnum = Materia.EMaterias.valueOf(nomeMateria.toUpperCase());
-//                    Optional<Materia> acharMateria = Arrays.stream(EMaterias.values())
-//                            .filter(e -> e.name().equalsIgnoreCase(nomeMateria))
-//                            .findFirst()
-//                            .map(materiaEnum -> new Materia(materiaEnum.name()));
-//
-//                    if (acharMateria.isEmpty()) {
-////                        System.out.println("Materia não encontrada");
-////                        break;
-//                    }
-//
-//                    Materia materia = acharMateria.get();
-//
-//                    aluno.adicionarMateria(materia);
-//                    alunoRepo.save(aluno);
-//                    System.out.println("Materia cadastrada com sucesso");
-//                    break;
-//                }
-//                System.out.println("Matéria não encontrada");
-//                break;
-
-
-//                if(turmas.size() == 0){
-//                    System.out.println("Lista está vazia");
-//                }else{
-//                    for(int i = 0; i < turmas.size(); i++){
-//                        System.out.println(i+1 + ". " + turmas.get(i));
-//                    }
-//                }
-//                break;
-//            case 2:
+                }
+            case 2:
 //                System.out.println("Insira o nome da Materia");
 //                String nome = input.nextLine();
 //                materias.add(new Materia(nome));
 
-                    case 3:
-//                List<EMaterias> Ematerias = List.of(EMaterias.values());
-//                Ematerias.stream().sorted(Comparator.comparing(Enum::name)).forEach(m -> System.out.println("- " + m));
-//                break;
+            case 3:
+                Arrays.stream(EMaterias.values()).toList().forEach(System.out::println);
 ////            case 4:
 //                System.out.println("Insira o numero do aluno a ser removido");
 //                int alunoRemove = input.nextInt();
@@ -195,6 +169,6 @@ public class Main {
 //            default:
 //                System.out.println("Digite uma opção válida");
 
-                }
         }
     }
+}
